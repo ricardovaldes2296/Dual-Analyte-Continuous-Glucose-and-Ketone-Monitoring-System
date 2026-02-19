@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Description: DA-CGKM Project</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Placeholder: Chosen Palette -->
+    <!-- Chosen Palette: Clinical Teal & Slate. Rationale: Represents sterility, medical precision, and trust. 
+         Primary: Slate-800 (Text), Teal-600 (Accents/Brand). Background: Slate-50. -->
+
+    <!-- Placeholder: Application Structure Plan -->
+    <!-- Application Structure Plan: 
+         1. Header: Project Title and Context.
+         2. Executive Summary/Regulatory Profile: FDA codes, Classification, and the specific STRATEGY to request a new bridging regulation.
+         3. Clinical Significance: New section derived from the "Project Selection" PDF detailing the 30% market stat and neuroinflammation use case.
+         4. Interactive Device Anatomy: The core visual description of the physical device (Patch/Transmitter).
+         5. Functional Mechanism: Explains the dual-enzyme science.
+         6. Clinical Output Simulation: Chart.js visualization of the GKI concept.
+         7. Team Footer: Lists specific roles from the Group Responsibility doc.
+    -->
+
+    <!-- Placeholder: Visualization & Content Choices -->
+    <!-- Visualization & Content Choices:
+         1. Device Anatomy (Interactive CSS Shapes): 
+            - Goal: Visualize the device components without external images.
+            - Interaction: Clickable zones update a detail panel with material specs.
+         2. Dual Analyte Chart (Chart.js):
+            - Goal: Demonstrate the clinical utility (Glucose vs Ketone correlation).
+         3. Material Tables (HTML Grid):
+            - Goal: List specific medical-grade materials (ABS, Polyimide, etc.).
+    -->
+
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        /* Custom styles for the CSS-drawn device */
+        .device-patch {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .device-patch:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .active-part {
+            border-color: #0d9488; /* Teal-600 */
+            background-color: #f0fdfa; /* Teal-50 */
+        }
+        
+        .chart-container {
+            position: relative; 
+            width: 100%; 
+            max-width: 100%; 
+            height: 350px; 
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans leading-relaxed">
+
+    <!-- Navigation / Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-slate-200">
+        <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold text-slate-900">Device Description</h1>
+                <p class="text-sm text-slate-500">Dual Analyte Continuous Glucose & Ketone Monitor (DA-CGKM)</p>
+            </div>
+            <div class="mt-2 md:mt-0 text-right text-xs text-slate-400">
+                <p>FDA Medical Device Regulation Group Project</p>
+                <p>Johns Hopkins University | Spring 2026</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 space-y-8">
+
+        <!-- Executive Summary & Regulatory Strategy -->
+        <section class="max-w-5xl mx-auto">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-slate-800 mb-2">Project Overview & Regulatory Strategy</h2>
+                <p class="text-slate-600 max-w-3xl mx-auto">
+                    The DA-CGKM is a Class II prescription-use wearable designed for the continuous quantification of interstitial fluid glucose and β-hydroxybutyrate (BHB). 
+                    <span class="font-semibold text-teal-700">Strategic Note:</span> While predicated on existing codes QDK and JIN, this submission requests a new regulation number to bridge the two for integrated dual monitoring.
+                </p>
+            </div>
+            
+            <!-- Regulatory Summary Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                <div class="bg-white p-5 rounded-lg shadow-sm border-t-4 border-teal-500 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-slate-700 uppercase text-xs tracking-wider">Target Classification</h3>
+                    <p class="text-3xl font-bold text-teal-600 mt-2">Class II</p>
+                    <p class="text-sm text-slate-500 mt-1">General Controls & Special Controls</p>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm border-t-4 border-blue-500 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-slate-700 uppercase text-xs tracking-wider">Product Codes</h3>
+                    <div class="flex items-baseline space-x-2 mt-2">
+                        <span class="text-2xl font-bold text-blue-600">QDK</span>
+                        <span class="text-xs text-slate-400">Glucose (862.1355)</span>
+                    </div>
+                    <div class="flex items-baseline space-x-2">
+                        <span class="text-2xl font-bold text-blue-600">JIN</span>
+                        <span class="text-xs text-slate-400">Ketone (862.1435)</span>
+                    </div>
+                </div>
+                <div class="bg-white p-5 rounded-lg shadow-sm border-t-4 border-purple-500 hover:shadow-md transition-shadow">
+                    <h3 class="font-bold text-slate-700 uppercase text-xs tracking-wider">Novel Feature</h3>
+                    <p class="text-sm font-semibold text-purple-700 mt-2">Single Filament Multi-Analyte Array</p>
+                    <p class="text-xs text-slate-500 mt-1">Enables real-time GKI (Glucose Ketone Index) calculation for clinical decision making.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clinical Significance (New Section from Report) -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+            <div class="bg-slate-100 px-6 py-4 border-b border-slate-200">
+                <h3 class="text-lg font-bold text-slate-800">Clinical Significance & Indication for Use</h3>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h4 class="font-bold text-teal-700 mb-2">Unmet Market Need</h4>
+                    <p class="text-sm text-slate-600 mb-4 leading-relaxed">
+                        Metabolic dysfunction is a primary driver of neuroinflammation and mood instability. According to the AHA (2026), <strong>Metabolic Syndrome affects over 30% of US adults</strong> and is a primary cause of cardiovascular mortality. Current devices track these metrics separately, failing to provide the integrated GKI data necessary for immediate metabolic intervention.
+                    </p>
+                    <h4 class="font-bold text-teal-700 mb-2">Target Population</h4>
+                    <ul class="list-disc list-inside text-sm text-slate-600 space-y-1">
+                        <li>Patients with Diabetes (Type 1 & 2) at risk of DKA.</li>
+                        <li>Patients with treatment-resistant mental health disorders (where nutritional ketosis is therapeutic).</li>
+                        <li>Individuals requiring real-time metabolic monitoring for neurological conditions.</li>
+                    </ul>
+                </div>
+                <div class="bg-purple-50 rounded-lg p-4 border border-purple-100">
+                    <h4 class="font-bold text-purple-800 mb-2">Clinical Benefit: The GKI Advantage</h4>
+                    <p class="text-sm text-purple-900 italic mb-3">
+                        "Clinical evidence suggests that deficits in psychiatric patients can be reduced by ketone bodies."
+                    </p>
+                    <p class="text-xs text-purple-800 leading-relaxed">
+                        By integrating simultaneous detection, the DA-CGKM provides a <strong>Glucose Ketone Index (GKI)</strong>. This single metric allows for more precise nutritional and therapeutic ketosis management compared to viewing glucose and ketone values in isolation, effectively bridging the gap between metabolic health and neurological symptom severity.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Device Description Section -->
+        <section>
+            <div class="mb-6 mt-8">
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-teal-500 pl-3">Physical Construction & Materials</h2>
+                <p class="text-slate-600 mt-2">Interactive Device Breakdown. Click on the components below (Transmitter, Patch, or Filament) to view specific construction materials and engineering specifications.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                
+                <!-- Left Column: CSS Visualizer -->
+                <div class="bg-white p-8 rounded-xl shadow-lg border border-slate-200 flex flex-col items-center justify-center min-h-[400px] relative select-none">
+                    
+                    <!-- Diagram Label -->
+                    <div class="absolute top-4 left-4 bg-slate-100 text-slate-500 px-2 py-1 rounded text-xs font-mono uppercase tracking-widest">Figure 1.0: Exploded View Schematic</div>
+
+                    <!-- The Device (CSS Construction) -->
+                    <div class="relative w-64 h-64 flex items-center justify-center">
+                        
+                        <!-- 1. The Patch (Base) -->
+                        <div id="part-patch" onclick="selectPart('patch')" 
+                             class="device-patch absolute w-48 h-48 bg-slate-100 rounded-full border-2 border-slate-300 flex items-center justify-center z-10 hover:bg-slate-200">
+                            <span class="text-xs text-slate-400 font-bold mt-32">Adhesive Patch</span>
+                        </div>
+
+                        <!-- 2. The Filament (Sensor Probe) -->
+                        <div id="part-filament" onclick="selectPart('filament')"
+                             class="device-patch absolute w-1 h-32 bg-yellow-500 bottom-[-40px] z-0 cursor-pointer hover:w-2 transition-all">
+                        </div>
+                        <!-- Label for filament which is hard to click -->
+                        <div onclick="selectPart('filament')" class="absolute bottom-[-60px] bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded cursor-pointer hover:bg-yellow-200">
+                            Sensor Filament
+                        </div>
+
+                        <!-- 3. The Transmitter (Top Housing) -->
+                        <div id="part-transmitter" onclick="selectPart('transmitter')"
+                             class="device-patch absolute w-24 h-32 bg-gradient-to-br from-teal-500 to-teal-700 rounded-2xl shadow-xl z-20 flex items-center justify-center border-2 border-white">
+                            <div class="text-white opacity-50 text-4xl font-bold">●</div>
+                        </div>
+
+                    </div>
+                    
+                    <p class="mt-12 text-sm text-slate-400 italic">Click components above to inspect</p>
+
+                </div>
+
+                <!-- Right Column: Detail Panel -->
+                <div id="detail-panel" class="bg-white p-6 rounded-xl shadow border-t-4 border-teal-500 h-full">
+                    <!-- Dynamic Content Loaded Here via JS -->
+                    <div class="flex flex-col items-center justify-center h-full text-slate-400">
+                        <svg class="w-12 h-12 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                        <p>Select a component from the diagram to view Material Specs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mechanism of Action & Clinical Output -->
+        <section class="mt-12">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-800 border-l-4 border-purple-500 pl-3">Mechanism of Action</h2>
+                <p class="text-slate-600 mt-2">
+                    The device utilizes a novel multi-analyte sensor array on a single filament. The dual-enzyme layer provides real-time Glucose Ketone Index (GKI) data, preventing DKA and managing metabolic-driven neurological disorders.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Chemistry Explanation -->
+                <div class="bg-white p-6 rounded-lg shadow lg:col-span-1">
+                    <h3 class="font-bold text-lg mb-4 text-slate-800 border-b pb-2">Electrochemical Detection</h3>
+                    <ul class="space-y-4 text-sm text-slate-600">
+                        <li>
+                            <strong class="text-teal-700 block">Analyte 1: Glucose</strong>
+                            <p>Enzyme: Glucose Oxidase (GOx).</p>
+                            <p>Reaction: Glucose + O₂ → Gluconic Acid + H₂O₂. The sensor measures the amperometric signal generated by the oxidation of H₂O₂ at the platinum electrode.</p>
+                        </li>
+                        <li>
+                            <strong class="text-purple-700 block">Analyte 2: Ketone (BHB)</strong>
+                            <p>Enzyme: β-hydroxybutyrate Dehydrogenase (HBDH).</p>
+                            <p>Reaction: Converts BHB to acetoacetate, generating an electrical current proportional to ketone concentration.</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Live Data Simulation -->
+                <div class="bg-white p-6 rounded-lg shadow lg:col-span-2">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-lg text-slate-800">Simulated Sensor Output (24 Hours)</h3>
+                        <div class="flex space-x-2">
+                            <span class="flex items-center text-xs"><span class="w-3 h-3 bg-teal-500 rounded-full mr-1"></span> Glucose (mg/dL)</span>
+                            <span class="flex items-center text-xs"><span class="w-3 h-3 bg-purple-500 rounded-full mr-1"></span> Ketones (mmol/L)</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart Container -->
+                    <div class="chart-container">
+                        <canvas id="dualAnalyteChart"></canvas>
+                    </div>
+                    
+                    <p class="text-xs text-slate-400 mt-2 text-center">
+                        *Simulated data demonstrating post-prandial glucose spike followed by ketogenic state recovery. Hover points to see calculated GKI.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- References Section -->
+        <section class="mt-8 bg-slate-100 p-6 rounded-lg">
+             <h3 class="font-bold text-sm text-slate-500 uppercase mb-2">References</h3>
+             <ul class="text-xs text-slate-500 space-y-2">
+                 <li>1. American Heart Association. (2026). 2026 Heart Disease and Stroke Statistics: A Report of US and Global Data From the American Heart Association. Circulation, 153(4).</li>
+                 <li>2. 21 CFR 862.1355 - Regulation for Glucose Test System.</li>
+                 <li>3. 21 CFR 862.1435 - Regulation for Ketone Test System.</li>
+             </ul>
+        </section>
+
+    </main>
+
+    <!-- Team Footer -->
+    <footer class="bg-slate-800 text-slate-300 py-8 mt-12">
+        <div class="container mx-auto px-4">
+            <h4 class="text-sm font-bold uppercase tracking-widest mb-4 text-teal-500">Project Team & Responsibilities</h4>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 text-xs">
+                <div>
+                    <strong class="text-white block mb-1">Leader</strong>
+                    <span class="block">Joseph Sawaged</span>
+                    <span class="text-slate-500">Initiative & Objectives</span>
+                </div>
+                <div>
+                    <strong class="text-white block mb-1">Recorder</strong>
+                    <span class="block">John-Dalton Drake</span>
+                    <span class="text-slate-500">Org & Technology</span>
+                </div>
+                <div>
+                    <strong class="text-white block mb-1">Editor</strong>
+                    <span class="block">Dalia Diaz-Zorrilla</span>
+                    <span class="text-slate-500">Detail & Presentation</span>
+                </div>
+                <div>
+                    <strong class="text-white block mb-1">Connector</strong>
+                    <span class="block">Ricardo Valdes</span>
+                    <span class="text-slate-500">Networking & Submission</span>
+                </div>
+                <div>
+                    <strong class="text-white block mb-1">Researcher</strong>
+                    <span class="block">Elizabeth Francis</span>
+                    <span class="text-slate-500">Literature & Validation</span>
+                </div>
+            </div>
+            <div class="mt-8 pt-8 border-t border-slate-700 text-center text-xs text-slate-500">
+                <p>Generated for FDA Medical Device Regulation Course Project | February 2026</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Store for Device Components
+        const deviceData = {
+            transmitter: {
+                title: "Transmitter & Housing",
+                subtitle: "The reusable (or disposable) electronic component.",
+                specs: [
+                    { label: "Material", value: "Medical Grade ABS or Polycarbonate (ISO 10993 Biocompatible)" },
+                    { label: "Dimensions", value: "3.2cm x 2.0cm x 0.5cm" },
+                    { label: "Water Resistance", value: "IP28 (Submersible up to 2.5m for 30 min)" },
+                    { label: "Power Source", value: "Lithium-ion Coin Cell (Non-replaceable)" },
+                    { label: "Communication", value: "Bluetooth Low Energy (BLE) 5.0" }
+                ],
+                description: "The transmitter houses the ASIC (Application Specific Integrated Circuit) responsible for potentiostatic control of the sensor electrodes. It digitizes the raw current signal (nano-amps) and transmits data packets to the receiver/smartphone every 5 minutes."
+            },
+            patch: {
+                title: "Adhesive Patch & Mount",
+                subtitle: "The wearable interface with the skin.",
+                specs: [
+                    { label: "Fabric Material", value: "Spunlace Polyester (Breathable, Flexible)" },
+                    { label: "Adhesive", value: "Pressure Sensitive Acrylic (Medical Grade, Latex-free)" },
+                    { label: "Wear Duration", value: "14 Days" },
+                    { label: "Sterilization", value: "E-Beam or Ethylene Oxide" }
+                ],
+                description: "The patch serves as the mechanical anchor for the device. It utilizes a breathable non-woven fabric coated with a hypoallergenic acrylic adhesive designed to withstand sweat and showering while minimizing skin irritation (contact dermatitis)."
+            },
+            filament: {
+                title: "Sensor Probe (Filament)",
+                subtitle: "The transcutaneous sensing element.",
+                specs: [
+                    { label: "Substrate", value: "Polyimide or Polyester (Flexible)" },
+                    { label: "Working Electrode", value: "Platinum or Gold Paste (Carbon-based)" },
+                    { label: "Reference Electrode", value: "Silver/Silver Chloride (Ag/AgCl)" },
+                    { label: "Enzyme Layout", value: "Co-immobilized Glucose Oxidase & HBDH" },
+                    { label: "Membrane", value: "Polyurethane (Flux-limiting outer layer)" }
+                ],
+                description: "A hair-thin filament inserted into the subcutaneous tissue (interstitial fluid). Distinct from traditional sensors, this features a <strong>dual-enzyme coating on a single filament</strong> permitting simultaneous measurement of Glucose and BHB. The outer membrane controls the diffusion of analytes to ensure linearity across physiological ranges."
+            }
+        };
+
+        // UI Logic
+        const detailPanel = document.getElementById('detail-panel');
+        const parts = ['patch', 'transmitter', 'filament'];
+
+        function selectPart(partName) {
+            // Update Visual Selection State
+            parts.forEach(p => {
+                const el = document.getElementById(`part-${p}`);
+                if(el) el.classList.remove('active-part', 'ring-4', 'ring-teal-200');
+            });
+            const activeEl = document.getElementById(`part-${partName}`);
+            if(activeEl) activeEl.classList.add('active-part', 'ring-4', 'ring-teal-200');
+
+            // Update Content Panel
+            const data = deviceData[partName];
+            
+            let htmlContent = `
+                <div class="animate-fade-in-up">
+                    <h3 class="text-xl font-bold text-teal-700">${data.title}</h3>
+                    <p class="text-sm text-slate-500 mb-4">${data.subtitle}</p>
+                    
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 mb-4">
+                        <table class="w-full text-sm">
+                            <tbody class="divide-y divide-slate-200">
+                                ${data.specs.map(spec => `
+                                    <tr>
+                                        <td class="py-2 font-semibold text-slate-600">${spec.label}</td>
+                                        <td class="py-2 text-slate-800">${spec.value}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="font-bold text-slate-800 text-sm uppercase mb-2">Technical Description</h4>
+                    <p class="text-sm text-slate-600 leading-relaxed">${data.description}</p>
+                </div>
+            `;
+            
+            detailPanel.innerHTML = htmlContent;
+        }
+
+        // Chart.js Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const ctx = document.getElementById('dualAnalyteChart').getContext('2d');
+            
+            // Dummy Data Generator (Simulating a day)
+            const labels = Array.from({length: 24}, (_, i) => `${i}:00`);
+            const glucoseData = [90, 85, 88, 110, 140, 130, 100, 95, 90, 85, 82, 80, 78, 75, 74, 72, 70, 68, 65, 68, 70, 72, 75, 78]; // mg/dL
+            const ketoneData = [0.2, 0.3, 0.3, 0.2, 0.1, 0.1, 0.2, 0.3, 0.4, 0.5, 0.8, 1.2, 1.5, 1.8, 2.1, 2.4, 2.6, 2.8, 3.0, 2.8, 2.5, 2.2, 1.5, 1.0]; // mmol/L
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Glucose (mg/dL)',
+                            data: glucoseData,
+                            borderColor: '#14b8a6', // Teal
+                            backgroundColor: 'rgba(20, 184, 166, 0.1)',
+                            yAxisID: 'y',
+                            tension: 0.4,
+                            pointRadius: 2
+                        },
+                        {
+                            label: 'Ketones (mmol/L)',
+                            data: ketoneData,
+                            borderColor: '#a855f7', // Purple
+                            backgroundColor: 'rgba(168, 85, 247, 0.1)',
+                            yAxisID: 'y1',
+                            tension: 0.4,
+                            pointRadius: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                footer: (tooltipItems) => {
+                                    // Calculate simplistic GKI: Glucose (mg/dL) / 18 / Ketones
+                                    const g = tooltipItems[0].raw;
+                                    const k = tooltipItems[1].raw;
+                                    const gki = (g / 18) / k;
+                                    return `GKI Score: ${gki.toFixed(2)}`;
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: { display: true, text: 'Glucose (mg/dL)' },
+                            grid: { color: '#f1f5f9' }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: { display: true, text: 'Ketones (mmol/L)' },
+                            grid: { drawOnChartArea: false } // only want the grid lines for one axis to show up
+                        },
+                        x: {
+                            grid: { display: false }
+                        }
+                    }
+                }
+            });
+
+            // Initialize details with Transmitter
+            selectPart('transmitter');
+        });
+
+    </script>
+</body>
+</html>
